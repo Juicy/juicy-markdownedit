@@ -1,6 +1,6 @@
 {
   "name": "juicy-markdown-tabbededitor",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "homepage": "https://github.com/Juicy/juicy-markdown-tabbededitor",
   "authors": [
     "andwah <anders.wahlgren@societyobjects.com>",
@@ -27,6 +27,6 @@
   "dependencies": {
     "polymer": "polymer/polymer#~1.0.0",
     "juicy-markdown": "*",
-    "juicy-markdown-editor": "*"
+    "juicy-markdown-editor": "#~1.1.0"
   }
 }
