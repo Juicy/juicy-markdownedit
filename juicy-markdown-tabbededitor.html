@@ -2,19 +2,13 @@
 Copyright 2014 Smörgåsbord Development. All rights reserved.
 version: 0.0.2
 -->
-
+<html>
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../juicy-markdown/juicy-markdown.html"> 
-<link rel="import" href="../juicy-markdown-editor/juicy-markdown-editor.html"> 
-
-<polymer-element 
-	name="juicy-markdown-tabbededitor" 
-	extends="juicy-markdown-editor"
-	attributes="value index footer">
-
-	<template>
-
-		<style>
+<link rel="import" href="../juicy-markdown-editor/juicy-markdown-editor.html">
+<head>
+<dom-module id="juicy-markdown-tabbededitor">
+	<style>
 
 			:host {
 
@@ -196,20 +190,19 @@ version: 0.0.2
 			}
 
 		</style>
-
+	<template>
 
 
 		<div class="tabHeader">
-			<button class="tabButton {{ {tabButtonSelected:index==0} | tokenList }}" on-click="{{buttonClick1}}">Markdown</button>
-			<button class="tabButton {{ {tabButtonSelected:index==1} | tokenList }}" on-click="{{buttonClick2}}">Raw</button>
-			<button class="tabButton {{ {tabButtonSelected:index==2} | tokenList }}" on-click="{{buttonClick3}}">Preview</button>
+			<button class="tabButton tabButtonSelected" on-click="buttonClick1">Markdown</button>
+			<button class="tabButton" on-click="buttonClick2">Raw</button>
+			<button class="tabButton" on-click="buttonClick3">Preview</button>
 		</div>
 
 		<div id="tabPageContent">
 
 			<div>
-				<shadow id="mdEdit"></shadow>
-				<!-- <juicy-markdown id="mdEdit" value="{{value}}" ... -->
+				<juicy-markdown-editor id="mdedit" value="{{value}}"></juicy-markdown-editor>
 			</div>
 			
 			<div>
@@ -223,27 +216,39 @@ version: 0.0.2
 
 		<div id="tabFooter"></div>
 	</template>
-
+</dom-module>
 	<script>
-
-	    "use strict";
-
-	    Polymer('juicy-markdown-tabbededitor', {
-	    	index: 0,
-	    	footer: "",
+		"use strict";
+	    Polymer({
+			is: 'juicy-markdown-tabbededitor',
+			behaviors: [markdownEditorBehavior],
+			properties: {
+				index: {
+					type: Number,
+					value: 0,
+					observer: 'indexChanged'
+				},
+				oldIndex: {
+					type: Number,
+					value: 0
+				},
+				footer: {
+					type: String,
+					value: "",
+					notify: true,
+					observer: 'footerChanged'
+				}
+			},
 	      	ready: function() {
 	      		this.showPage(this.index);
-				// this.super(); // if we would not "use strict"	
-				Polymer.getRegisteredPrototype("juicy-markdown-editor").ready.apply(this,arguments);
 	      	},
 
-	      	indexChanged: function( oldValue, newValue) {
-
-	      		this.showPage(newValue);
+	      	indexChanged: function( newValue, oldValue) {
+				this.showPage(newValue);
+				this.oldIndex = oldValue;
 	      	},
 
 	      	showPage: function(index) {
-
       			this.$.tabPageContent.children[0].style.display = "none";
       			this.$.tabPageContent.children[1].style.display = "none";
       			this.$.tabPageContent.children[2].style.display = "none";
@@ -251,28 +256,34 @@ version: 0.0.2
 	      		if(index > 2) return;
       			this.$.tabPageContent.children[index].style.display = null;
 	      	},
-	      	footerChanged: function( oldValue, newValue) {
-	      		
-	      		this.$.tabFooter.innerHTML = newValue;
+	      	footerChanged: function( newValue, oldValue) {
+				this.$.tabFooter.innerHTML = newValue;
 	      	},
 	      	buttonClick1: function(event, detail, sender) { 
 
 	      		this.index = 0;
+				this.setTabButtonClass(0, this.oldIndex);
 	      	},
 	      	buttonClick2: function(event, detail, sender) { 
 
 	      		this.index = 1;
+				this.setTabButtonClass(1, this.oldIndex);
 	      	},
 	      	buttonClick3: function(event, detail, sender) { 
 
 	      		this.index = 2;
+				this.setTabButtonClass(2, this.oldIndex);
 	      	},	
 	      	onFileUploadError: function(e) {
 
 				e.stopPropagation();
 				var xFile = e.detail;
 				this.$.tabFooter.innerHTML = xFile.statusText;
-	      	}    
+	      	},
+			setTabButtonClass: function(idx, oldIdx){
+				var tabHeader = this.$$('.tabHeader');
+				tabHeader.children[idx].classList.add("tabButtonSelected");
+				tabHeader.children[oldIdx].classList.remove("tabButtonSelected");
+			}			
 	    });
 	</script>
-</polymer-element>
