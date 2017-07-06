@@ -7,286 +7,283 @@ version: 0.0.2
 <link rel="import" href="../juicy-markdown/juicy-markdown.html"> 
 <link rel="import" href="../juicy-markdown-editor/juicy-markdown-editor.html">
 <dom-module id="juicy-markdown-tabbededitor">
-	<style>
+    <style>
 
-			:host {
+            :host {
 
-				display: -webkit-box;
-				display: -moz-box;
-				display: -ms-flexbox;
-				display: -webkit-flex;
-				display: flex;
+                display: -webkit-box;
+                display: -moz-box;
+                display: -ms-flexbox;
+                display: -webkit-flex;
+                display: flex;
 
-				flex-direction: column;			
-				-webkit-flex-direction: column;
-				-ms-flex-direction: column;
+                flex-direction: column;
+                -webkit-flex-direction: column;
+                -ms-flex-direction: column;
 
-				-webkit-align-items:stretch;
-				align-items:stretch;
-				-ms-align-items:stretch;
+                -webkit-align-items:stretch;
+                align-items:stretch;
+                -ms-align-items:stretch;
 
-				font-size: inherit;
-			}
+                font-size: inherit;
+            }
 
-			.tabHeader {
+            .tabHeader {
 
-				-webkit-flex: 0 1 auto;
-				flex:  0 1 auto;
-				-ms-flex:  0 1 auto;
+                -webkit-flex: 0 1 auto;
+                flex:  0 1 auto;
+                -ms-flex:  0 1 auto;
 
-				background-color: #f7f7f7;
-				border-color: #dddddd;
+                background-color: #f7f7f7;
+                border-color: #dddddd;
 
-				border-style:solid;
-				border-top-width: 0px;
-				border-left-width: 0px;
-				border-right-width: 0px;
-				border-bottom-width: 1px;
+                border-style:solid;
+                border-top-width: 0px;
+                border-left-width: 0px;
+                border-right-width: 0px;
+                border-bottom-width: 1px;
 
-				font-size: inherit;
-			}	
+                font-size: inherit;
+            }	
 
-			#tabPageContent {
+            #tabPageContent {
 
-				display: -webkit-box;
-				display: -moz-box;
-				display: -ms-flexbox;
-				display: -webkit-flex;
-				display: flex;
+                display: -webkit-box;
+                display: -moz-box;
+                display: -ms-flexbox;
+                display: -webkit-flex;
+                display: flex;
 
-				-webkit-flex: 1 0;
-				flex: 1 0;
-				-ms-flex: 1 0;	
-			}
+                -webkit-flex: 1 0;
+                flex: 1 0;
+                -ms-flex: 1 0;	
+            }
 
-			juicy-markdown-editor {
+            juicy-markdown-editor {
 
-				-webkit-flex: 1 0;
-				flex: 1 0;
-				-ms-flex: 1 0;	
-			}
+                -webkit-flex: 1 0;
+                flex: 1 0;
+                -ms-flex: 1 0;	
+            }
 
-			juicy-markdown {
+            juicy-markdown {
 
-			   -webkit-flex: 1;
-		        flex: 1;
-        		-ms-flex: 1;
-        						
-				padding: 10px;
-			}
+               -webkit-flex: 1;
+                flex: 1;
+                -ms-flex: 1;
+                                
+                padding: 10px;
+            }
 
-			#tabFooter {
+            #tabFooter {
 
-				-webkit-flex: 0 1 auto;
-				flex: 0 1 auto;
-				-ms-flex: 0 1 auto;
+                -webkit-flex: 0 1 auto;
+                flex: 0 1 auto;
+                -ms-flex: 0 1 auto;
 
-				background-color: #f7f7f7;	
-				border-color: #dddddd;
-/*				
-				border-style:solid;
-				border-top-width: 0px;
-				border-left-width: 1px;
-				border-right-width: 1px;
-				border-bottom-width: 1px;	
-*/
-				border-style:solid;
-				border-top-width: 1px;
-				border-left-width: 0px;
-				border-right-width: 0px;
-				border-bottom-width: 0px;					
-			}
+                background-color: #f7f7f7;
+                border-color: #dddddd;
+    /*
+                border-style:solid;
+                border-top-width: 0px;
+                border-left-width: 1px;
+                border-right-width: 1px;
+                border-bottom-width: 1px;
+    */
+                border-style:solid;
+                border-top-width: 1px;
+                border-left-width: 0px;
+                border-right-width: 0px;
+                border-bottom-width: 0px;
+            }
 
-			#tabPageContent div {
+            #tabPageContent div {
 
-			   -webkit-flex: 1;
-		        flex: 1;
-        		-ms-flex: 1;
+               -webkit-flex: 1;
+                flex: 1;
+                -ms-flex: 1;
 
-				display: -webkit-box;
-				display: -moz-box;
-				display: -ms-flexbox;
-				display: -webkit-flex;
-				display: flex;
-
-
-				flex-direction: row;			
-				-webkit-flex-direction: row;
-				-ms-flex-direction: row;
-/*
-				border-color: red;
-				border-style:solid;
-				border-top-width: 0px;
-				border-left-width: 0px;
-				border-right-width: 0px;
-				border-bottom-width: 0px;
-*/				
-			}
-
-			#tabPageContent div textarea {
-
-				-webkit-flex: 1;
-				flex: 1;
-				-ms-flex: 1;
-
-				border: 0px;
-				margin: 0px;
-				padding: 10px;
-
-				resize: none;
-
-				background-color: transparent;
-			}	
-
-			.tabButton {
-
-				border-top-width: 1px;
-				border-left-width: 1px;
-				border-right-width: 1px;
-				border-bottom-width: 0px;
-				border-style:solid;
-				border-color: transparent;
-
-				margin-left: 5px;
-				margin-right: 5px;
-				margin-top: 5px;
-				margin-bottom: -1px;
-
-				padding: 5px 10px 5px 10px;
-				background-color: transparent;
-				color:#666666;
-				text-decoration:none;
- 				outline: none;
- 				cursor:pointer;
-
-				font-size: inherit;
-			}
-
-			.tabButton:focus {
-
- 				outline: none; 
- 			}	
-
-			.tabButton:active {
-
- 				outline: none;
-			}
-
-		    .tabButtonSelected {
-
-				border-color: #dddddd;
-				border-style:solid;
-				border-top-width: 1px;
-				border-left-width: 1px;
-				border-right-width: 1px;
-				border-bottom-width: 1px;
-				border-bottom-color:white;
-		        color: black;
-				background-color: white;
-
-				border-top-left-radius:4px;
-				border-top-right-radius:4px;
-			}
-
-		</style>
-	<template>
+                display: -webkit-box;
+                display: -moz-box;
+                display: -ms-flexbox;
+                display: -webkit-flex;
+                display: flex;
 
 
-		<div class="tabHeader">
-			<button class="tabButton tabButtonSelected" on-click="buttonClick1">Markdown</button>
-			<button class="tabButton" on-click="buttonClick2">Raw</button>
-			<button class="tabButton" on-click="buttonClick3">Preview</button>
-		</div>
+                flex-direction: row;
+                -webkit-flex-direction: row;
+                -ms-flex-direction: row;
+    /*
+                border-color: red;
+                border-style:solid;
+                border-top-width: 0px;
+                border-left-width: 0px;
+                border-right-width: 0px;
+                border-bottom-width: 0px;
+    */
+            }
 
-		<div id="tabPageContent">
+            #tabPageContent div textarea {
 
-			<div>
-				<juicy-markdown-editor id="mdedit" value="{{value}}"></juicy-markdown-editor>
-			</div>
-			
-			<div>
-				<textarea value="{{value}}" placeholder="{{placeholder}}"></textarea> 
-			</div>
+                -webkit-flex: 1;
+                flex: 1;
+                -ms-flex: 1;
 
-			<div>
-				<juicy-markdown value="{{value}}" ghcss="{{ghcss}}"></juicy-markdown>
-			</div>
-		</div>
+                border: 0px;
+                margin: 0px;
+                padding: 10px;
 
-		<div id="tabFooter"></div>
-	</template>
-</dom-module>
-	<script>
-		"use strict";
-		
-	    Polymer({
-			is: 'juicy-markdown-tabbededitor',
-			properties: {
-				index: {
-					type: Number,
-					value: 0,
-					observer: 'indexChanged'
-				},
-				oldIndex: {
-					type: Number,
-					value: 0
-				},
-				footer: {
-					type: String,
-					value: "",
-					notify: true,
-					observer: 'footerChanged'
-				}
-			},
-	      	ready: function() {
-	      		this.showPage(this.index);
-	      	},
+                resize: none;
 
-	      	indexChanged: function( newValue, oldValue) {
-				this.showPage(newValue);
-				this.oldIndex = oldValue;
-	      	},
+                background-color: transparent;
+            }
 
-	      	showPage: function(index) {
-      			this.$.tabPageContent.children[0].style.display = "none";
-      			this.$.tabPageContent.children[1].style.display = "none";
-      			this.$.tabPageContent.children[2].style.display = "none";
+            .tabButton {
 
-	      		if(index > 2) return;
-      			this.$.tabPageContent.children[index].style.display = null;
-	      	},
-	      	footerChanged: function( newValue, oldValue) {
-			
-				this.$.tabFooter.innerHTML = newValue;
-	      	},
-	      	buttonClick1: function(event, detail, sender) { 
+                border-top-width: 1px;
+                border-left-width: 1px;
+                border-right-width: 1px;
+                border-bottom-width: 0px;
+                border-style:solid;
+                border-color: transparent;
 
-	      		this.index = 0;
-				this.setTabButtonClass(0, this.oldIndex);
-	      	},
-	      	buttonClick2: function(event, detail, sender) { 
+                margin-left: 5px;
+                margin-right: 5px;
+                margin-top: 5px;
+                margin-bottom: -1px;
 
-	      		this.index = 1;
-				this.setTabButtonClass(1, this.oldIndex);
-	      	},
-	      	buttonClick3: function(event, detail, sender) { 
+                padding: 5px 10px 5px 10px;
+                background-color: transparent;
+                color:#666666;
+                text-decoration:none;
+                outline: none;
+                cursor:pointer;
 
-	      		this.index = 2;
-				this.setTabButtonClass(2, this.oldIndex);
-	      	},	
-	      	onFileUploadError: function(e) {
+                font-size: inherit;
+            }
 
-				e.stopPropagation();
-				var xFile = e.detail;
-				this.$.tabFooter.innerHTML = xFile.statusText;
-	      	},
-			setTabButtonClass: function(idx, oldIdx){
-				var tabHeader = this.$$('.tabHeader');
-				if(!tabHeader.children[idx].classList.contains("tabButtonSelected")){
-					tabHeader.children[idx].classList.add("tabButtonSelected");
-					tabHeader.children[oldIdx].classList.remove("tabButtonSelected");
-				}
-			}			
-	    });
-	</script>
-	
+            .tabButton:focus {
+
+                outline: none; 
+            }
+
+            .tabButton:active {
+
+                outline: none;
+            }
+
+            .tabButtonSelected {
+
+                border-color: #dddddd;
+                border-style:solid;
+                border-top-width: 1px;
+                border-left-width: 1px;
+                border-right-width: 1px;
+                border-bottom-width: 1px;
+                border-bottom-color:white;
+                color: black;
+                background-color: white;
+
+                border-top-left-radius:4px;
+                border-top-right-radius:4px;
+            }
+
+        </style>
+    <template>
+
+
+        <div class="tabHeader">
+            <button class="tabButton tabButtonSelected" on-click="buttonClick1">Markdown</button>
+            <button class="tabButton" on-click="buttonClick2">Raw</button>
+            <button class="tabButton" on-click="buttonClick3">Preview</button>
+        </div>
+
+        <div id="tabPageContent">
+
+            <div>
+                <juicy-markdown-editor id="mdedit" value="{{value}}"></juicy-markdown-editor>
+            </div>
+            
+            <div>
+                <textarea value="{{value}}" placeholder="{{placeholder}}"></textarea> 
+            </div>
+
+            <div>
+                <juicy-markdown value="{{value}}" ghcss="{{ghcss}}"></juicy-markdown>
+            </div>
+        </div>
+
+        <div id="tabFooter"></div>
+    </template>
+    </dom-module>
+    <script>
+        "use strict";
+        
+        Polymer({
+            is: 'juicy-markdown-tabbededitor',
+            properties: {
+                index: {
+                    type: Number,
+                    value: 0,
+                    observer: 'indexChanged'
+                },
+                oldIndex: {
+                    type: Number,
+                    value: 0
+                },
+                footer: {
+                    type: String,
+                    value: "",
+                    notify: true,
+                    observer: 'footerChanged'
+                }
+            },
+            ready: function() {
+                this.showPage(this.index);
+            },
+
+            indexChanged: function( newValue, oldValue) {
+                this.showPage(newValue);
+                this.oldIndex = oldValue;
+            },
+
+            showPage: function(index) {
+                this.$.tabPageContent.children[0].style.display = "none";
+                this.$.tabPageContent.children[1].style.display = "none";
+                this.$.tabPageContent.children[2].style.display = "none";
+
+                if(index > 2) return;
+                this.$.tabPageContent.children[index].style.display = null;
+            },
+            footerChanged: function( newValue, oldValue) {
+            
+                this.$.tabFooter.innerHTML = newValue;
+            },
+            buttonClick1: function(event, detail, sender) { 
+
+                this.setTabButtonClass(this.index = 0, this.oldIndex);
+            },
+            buttonClick2: function(event, detail, sender) { 
+
+                this.setTabButtonClass(this.index = 1, this.oldIndex);
+            },
+            buttonClick3: function(event, detail, sender) { 
+
+                this.setTabButtonClass(this.index = 2, this.oldIndex);
+            },
+            onFileUploadError: function(e) {
+
+                e.stopPropagation();
+                var xFile = e.detail;
+                this.$.tabFooter.innerHTML = xFile.statusText;
+            },
+            setTabButtonClass: function(idx, oldIdx){
+                var tabButtons = this.querySelectorAll(".tabButton");
+                if(!tabButtons[idx].classList.contains("tabButtonSelected")){
+                    tabButtons[idx].classList.add("tabButtonSelected");
+                    tabButtons[oldIdx].classList.remove("tabButtonSelected");
+                }
+            }
+        });
+    </script>
+
