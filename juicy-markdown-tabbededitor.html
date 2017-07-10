@@ -6,284 +6,300 @@ version: 0.0.2
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../juicy-markdown/juicy-markdown.html"> 
 <link rel="import" href="../juicy-markdown-editor/juicy-markdown-editor.html">
+<script src="../to-markdown/dist/to-markdown.js"></script>
+<head>
 <dom-module id="juicy-markdown-tabbededitor">
     <style>
 
-            :host {
+        :host {
 
-                display: -webkit-box;
-                display: -moz-box;
-                display: -ms-flexbox;
-                display: -webkit-flex;
-                display: flex;
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
 
-                flex-direction: column;
-                -webkit-flex-direction: column;
-                -ms-flex-direction: column;
+            flex-direction: column;
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
 
-                -webkit-align-items:stretch;
-                align-items:stretch;
-                -ms-align-items:stretch;
+            -webkit-align-items:stretch;
+            align-items:stretch;
+            -ms-align-items:stretch;
 
-                font-size: inherit;
-            }
+            font-size: inherit;
+        }
 
-            .tabHeader {
+        #tabHeader {
 
-                -webkit-flex: 0 1 auto;
-                flex:  0 1 auto;
-                -ms-flex:  0 1 auto;
+            -webkit-flex: 0 1 auto;
+            flex:  0 1 auto;
+            -ms-flex:  0 1 auto;
 
-                background-color: #f7f7f7;
-                border-color: #dddddd;
+            background-color: #f7f7f7;
+            border-color: #dddddd;
 
-                border-style:solid;
-                border-top-width: 0px;
-                border-left-width: 0px;
-                border-right-width: 0px;
-                border-bottom-width: 1px;
+            border-style:solid;
+            border-top-width: 0px;
+            border-left-width: 0px;
+            border-right-width: 0px;
+            border-bottom-width: 1px;
 
-                font-size: inherit;
-            }	
+            font-size: inherit;
+        }
 
-            #tabPageContent {
+        #tabPageContent {
 
-                display: -webkit-box;
-                display: -moz-box;
-                display: -ms-flexbox;
-                display: -webkit-flex;
-                display: flex;
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
 
-                -webkit-flex: 1 0;
-                flex: 1 0;
-                -ms-flex: 1 0;	
-            }
+            -webkit-flex: 1 0;
+            flex: 1 0;
+            -ms-flex: 1 0;
+        }
 
-            juicy-markdown-editor {
+        juicy-markdown-editor {
 
-                -webkit-flex: 1 0;
-                flex: 1 0;
-                -ms-flex: 1 0;	
-            }
+            -webkit-flex: 1 0;
+            flex: 1 0;
+            -ms-flex: 1 0;
+        }
 
-            juicy-markdown {
+        juicy-markdown {
 
-               -webkit-flex: 1;
-                flex: 1;
-                -ms-flex: 1;
-                                
-                padding: 10px;
-            }
+           -webkit-flex: 1;
+            flex: 1;
+            -ms-flex: 1;
+                            
+            padding: 10px;
+        }
+        
+        #preview-div {
 
-            #tabFooter {
+           -webkit-flex: 1;
+            flex: 1;
+            -ms-flex: 1;
+                            
+            padding: 10px;
+        }
 
-                -webkit-flex: 0 1 auto;
-                flex: 0 1 auto;
-                -ms-flex: 0 1 auto;
+        #tabFooter {
 
-                background-color: #f7f7f7;
-                border-color: #dddddd;
-    /*
-                border-style:solid;
-                border-top-width: 0px;
-                border-left-width: 1px;
-                border-right-width: 1px;
-                border-bottom-width: 1px;
-    */
-                border-style:solid;
-                border-top-width: 1px;
-                border-left-width: 0px;
-                border-right-width: 0px;
-                border-bottom-width: 0px;
-            }
+            -webkit-flex: 0 1 auto;
+            flex: 0 1 auto;
+            -ms-flex: 0 1 auto;
 
-            #tabPageContent div {
+            background-color: #f7f7f7;
+            border-color: #dddddd;
+/*
+            border-style:solid;
+            border-top-width: 0px;
+            border-left-width: 1px;
+            border-right-width: 1px;
+            border-bottom-width: 1px;
+*/
+            border-style:solid;
+            border-top-width: 1px;
+            border-left-width: 0px;
+            border-right-width: 0px;
+            border-bottom-width: 0px;
+        }
 
-               -webkit-flex: 1;
-                flex: 1;
-                -ms-flex: 1;
+        #tabPageContent > div,
+        #tabPageContent ::slotted(*) {
 
-                display: -webkit-box;
-                display: -moz-box;
-                display: -ms-flexbox;
-                display: -webkit-flex;
-                display: flex;
+           -webkit-flex: 1;
+            flex: 1;
+            -ms-flex: 1;
+
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
 
 
-                flex-direction: row;
-                -webkit-flex-direction: row;
-                -ms-flex-direction: row;
-    /*
-                border-color: red;
-                border-style:solid;
-                border-top-width: 0px;
-                border-left-width: 0px;
-                border-right-width: 0px;
-                border-bottom-width: 0px;
-    */
-            }
+            flex-direction: row;
+            -webkit-flex-direction: row;
+            -ms-flex-direction: row;
+/*
+            border-color: red;
+            border-style:solid;
+            border-top-width: 0px;
+            border-left-width: 0px;
+            border-right-width: 0px;
+            border-bottom-width: 0px;
+*/
+            height: 400px;
+        }
 
-            #tabPageContent div textarea {
+        #tabPageContent > div.hideme,
+        #tabPageContent ::slotted(.hideme) {
+            display: none;
+        }
 
-                -webkit-flex: 1;
-                flex: 1;
-                -ms-flex: 1;
+        #tabHeader button,
+        #tabHeader ::slotted(*) {
 
-                border: 0px;
-                margin: 0px;
-                padding: 10px;
+            border-top-width: 1px;
+            border-left-width: 1px;
+            border-right-width: 1px;
+            border-bottom-width: 0px;
+            border-style:solid;
+            border-color: transparent;
 
-                resize: none;
+            margin-left: 5px;
+            margin-right: 5px;
+            margin-top: 5px;
+            margin-bottom: -1px;
 
-                background-color: transparent;
-            }
+            padding: 5px 10px 5px 10px;
+            background-color: transparent;
+            color:#666666;
+            text-decoration:none;
+            outline: none;
+            cursor:pointer;
 
-            .tabButton {
+            font-size: inherit;
+        }
 
-                border-top-width: 1px;
-                border-left-width: 1px;
-                border-right-width: 1px;
-                border-bottom-width: 0px;
-                border-style:solid;
-                border-color: transparent;
+        #tabHeader button:focus,
+        #tabHeader ::slotted(:focus) {
 
-                margin-left: 5px;
-                margin-right: 5px;
-                margin-top: 5px;
-                margin-bottom: -1px;
+            outline: none; 
+        }
 
-                padding: 5px 10px 5px 10px;
-                background-color: transparent;
-                color:#666666;
-                text-decoration:none;
-                outline: none;
-                cursor:pointer;
+        #tabHeader button:active,
+        #tabHeader ::slotted(:active) {
 
-                font-size: inherit;
-            }
+            outline: none;
+        }
 
-            .tabButton:focus {
+        #tabHeader button.selected,
+        #tabHeader ::slotted(.selected) {
 
-                outline: none; 
-            }
+            border-color: #dddddd;
+            border-style:solid;
+            border-top-width: 1px;
+            border-left-width: 1px;
+            border-right-width: 1px;
+            border-bottom-width: 1px;
+            border-bottom-color:white;
+            color: black;
+            background-color: white;
 
-            .tabButton:active {
+            border-top-left-radius:4px;
+            border-top-right-radius:4px;
+        }
 
-                outline: none;
-            }
-
-            .tabButtonSelected {
-
-                border-color: #dddddd;
-                border-style:solid;
-                border-top-width: 1px;
-                border-left-width: 1px;
-                border-right-width: 1px;
-                border-bottom-width: 1px;
-                border-bottom-color:white;
-                color: black;
-                background-color: white;
-
-                border-top-left-radius:4px;
-                border-top-right-radius:4px;
-            }
-
-        </style>
+    </style>
     <template>
-
-
-        <div class="tabHeader">
-            <button class="tabButton tabButtonSelected" on-click="buttonClick1">Markdown</button>
-            <button class="tabButton" on-click="buttonClick2">Raw</button>
-            <button class="tabButton" on-click="buttonClick3">Preview</button>
+        <div id="tabHeader" on-click="buttonClick">
+            <slot name="tab-button"></slot>
+            <button id="markdownButton">Markdown</button>
+            <button>Preview</button>
         </div>
 
         <div id="tabPageContent">
-
-            <div>
-                <juicy-markdown-editor id="mdedit" value="{{value}}"></juicy-markdown-editor>
-            </div>
+            <slot name="tab-body"></slot>
             
             <div>
-                <textarea value="{{value}}" placeholder="{{placeholder}}"></textarea> 
+                <juicy-markdown-editor id="mdedit" value="{{markdownValue}}" on-change="markdownValueChanged"></juicy-markdown-editor>
             </div>
 
             <div>
-                <juicy-markdown value="{{value}}" ghcss="{{ghcss}}"></juicy-markdown>
+                <div id="preview-div" inner-h-t-m-l="{{htmlValue}}"></div>
             </div>
         </div>
 
         <div id="tabFooter"></div>
     </template>
-    </dom-module>
-    <script>
-        "use strict";
-        
-        Polymer({
-            is: 'juicy-markdown-tabbededitor',
-            properties: {
-                index: {
-                    type: Number,
-                    value: 0,
-                    observer: 'indexChanged'
-                },
-                oldIndex: {
-                    type: Number,
-                    value: 0
-                },
-                footer: {
-                    type: String,
-                    value: "",
-                    notify: true,
-                    observer: 'footerChanged'
-                }
+</dom-module>
+<script>
+    "use strict";
+    Polymer({
+        is: 'juicy-markdown-tabbededitor',
+        properties: {
+            footer: {
+                type: String,
+                value: "",
+                notify: true,
+                observer: 'footerChanged'
             },
-            ready: function() {
-                this.showPage(this.index);
+            htmlValue :{
+                type: String,
+                notify:true,
+                value:"",
+                observer: "htmlValueChanged"
             },
-
-            indexChanged: function( newValue, oldValue) {
-                this.showPage(newValue);
-                this.oldIndex = oldValue;
-            },
-
-            showPage: function(index) {
-                this.$.tabPageContent.children[0].style.display = "none";
-                this.$.tabPageContent.children[1].style.display = "none";
-                this.$.tabPageContent.children[2].style.display = "none";
-
-                if(index > 2) return;
-                this.$.tabPageContent.children[index].style.display = null;
-            },
-            footerChanged: function( newValue, oldValue) {
-            
-                this.$.tabFooter.innerHTML = newValue;
-            },
-            buttonClick1: function(event, detail, sender) { 
-
-                this.setTabButtonClass(this.index = 0, this.oldIndex);
-            },
-            buttonClick2: function(event, detail, sender) { 
-
-                this.setTabButtonClass(this.index = 1, this.oldIndex);
-            },
-            buttonClick3: function(event, detail, sender) { 
-
-                this.setTabButtonClass(this.index = 2, this.oldIndex);
-            },
-            onFileUploadError: function(e) {
-
-                e.stopPropagation();
-                var xFile = e.detail;
-                this.$.tabFooter.innerHTML = xFile.statusText;
-            },
-            setTabButtonClass: function(idx, oldIdx){
-                var tabButtons = this.querySelectorAll(".tabButton");
-                if(!tabButtons[idx].classList.contains("tabButtonSelected")){
-                    tabButtons[idx].classList.add("tabButtonSelected");
-                    tabButtons[oldIdx].classList.remove("tabButtonSelected");
-                }
+            markdownValue :{
+                type: String,
+                notify:true,
+                value:"",
+                observer: "markdownValueChanged"
             }
-        });
-    </script>
+        },
+        attached: function() {
+            this.$.mdedit.$.previewPanel.style.display = "none";
+            this.showPage(this.$.markdownButton);
+        },
+        showPage: function(button) {
+            var domButtons = Array.from(this.querySelectorAll("[slot='tab-button']"));
+            var domBodies = Array.from(this.querySelectorAll("[slot='tab-body']"));
+            var shadowDomButtons = Array.from(this.$.tabHeader.children);
+            var shadowDomBodies = Array.from(this.$.tabPageContent.children);
 
+            var tab, index;
+            var parent = button.parentNode;
+            if (parent == this) {
+                index = domButtons.indexOf(button);
+                tab = domBodies[index];
+            }
+            else {
+                index = shadowDomButtons.indexOf(button);
+                tab = shadowDomBodies[index];
+            }
+
+            domButtons.forEach((elem) => elem.classList.remove('selected'));
+            shadowDomButtons.forEach((elem) => elem.classList.remove('selected'));
+            button.classList.add('selected');
+
+            domBodies.forEach((elem) => elem.classList.add('hideme'));
+            shadowDomBodies.forEach((elem) => elem.classList.add('hideme'));
+            tab.classList.remove('hideme');
+        },
+        htmlValueChanged: function(newValue, oldValue){
+            if (this.skipNext) {
+                this.skipNext = false;
+                return;
+            }
+            if (newValue !== null) {
+                this.skipHtmlChange = true;
+                this.markdownValue = toMarkdown(newValue);
+            }
+        },
+        markdownValueChanged: function(newValue, oldValue){
+            this.skipNext = true;
+            if (!this.skipHtmlChange)
+                this.htmlValue = this.$.mdedit.$.previewPanel.$.preview.innerHTML;
+            this.skipHtmlChange = false;
+        },
+        footerChanged: function( newValue, oldValue) {
+            this.$.tabFooter.innerHTML = newValue;
+        },
+        buttonClick: function(event, detail, sender) {
+            if (event.target.nodeName == "BUTTON") {
+                this.showPage(event.target);
+            }
+        },
+        onFileUploadError: function(e) {
+
+            e.stopPropagation();
+            var xFile = e.detail;
+            this.$.tabFooter.innerHTML = xFile.statusText;
+        }
+    });
+</script>
