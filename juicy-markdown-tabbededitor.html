@@ -158,7 +158,7 @@ version: 0.0.2
             <slot name="tab-body"></slot>
             
             <div>
-                <juicy-markdown-editor id="mdedit" value="{{markdownValue}}" on-change="markdownValueChanged"></juicy-markdown-editor>
+                <juicy-markdown-editor customheader="{{customheader}}" ghcss="{{ghcss}}" uploadurl="{{uploadurl}}" placeholder="{{placeholder}}" id="mdedit" value="{{markdownValue}}" on-change="markdownValueChanged"></juicy-markdown-editor>
             </div>
 
             <div>
@@ -191,6 +191,22 @@ version: 0.0.2
                 notify:true,
                 value:"",
                 observer: "markdownValueChanged"
+            },
+            placeholder: {
+                type: String,
+                value: ""
+            },
+            uploadurl: {
+                type: String,
+                value: ""
+            },
+            ghcss: {
+                type: Boolean,
+                value: false
+            },
+            customheader: {
+                type: String,
+                value: "x-file"
             }
         },
         attached: function() {
