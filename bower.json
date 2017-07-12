@@ -27,6 +27,7 @@
   "dependencies": {
     "polymer": "polymer/polymer#^1.0.0",
     "juicy-markdown": "*",
-    "juicy-markdown-editor": "*"
+    "juicy-markdown-editor": "*",
+    "to-markdown": "*"
   }
 }
