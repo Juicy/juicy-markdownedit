@@ -7,34 +7,23 @@ version: 0.0.2
 <link rel="import" href="../juicy-markdown/juicy-markdown.html"> 
 <link rel="import" href="../juicy-markdown-editor/juicy-markdown-editor.html">
 <script src="../to-markdown/dist/to-markdown.js"></script>
-<head>
 <dom-module id="juicy-markdown-tabbededitor">
     <style>
 
         :host {
 
-            display: -webkit-box;
-            display: -moz-box;
-            display: -ms-flexbox;
-            display: -webkit-flex;
             display: flex;
 
             flex-direction: column;
-            -webkit-flex-direction: column;
-            -ms-flex-direction: column;
 
-            -webkit-align-items:stretch;
             align-items:stretch;
-            -ms-align-items:stretch;
 
             font-size: inherit;
         }
 
         #tabHeader {
 
-            -webkit-flex: 0 1 auto;
             flex:  0 1 auto;
-            -ms-flex:  0 1 auto;
 
             background-color: #f7f7f7;
             border-color: #dddddd;
@@ -50,57 +39,36 @@ version: 0.0.2
 
         #tabPageContent {
 
-            display: -webkit-box;
-            display: -moz-box;
-            display: -ms-flexbox;
-            display: -webkit-flex;
             display: flex;
 
-            -webkit-flex: 1 0;
             flex: 1 0;
-            -ms-flex: 1 0;
         }
 
         juicy-markdown-editor {
 
-            -webkit-flex: 1 0;
             flex: 1 0;
-            -ms-flex: 1 0;
         }
 
         juicy-markdown {
 
-           -webkit-flex: 1;
             flex: 1;
-            -ms-flex: 1;
                             
             padding: 10px;
         }
         
         #preview-div {
 
-           -webkit-flex: 1;
             flex: 1;
-            -ms-flex: 1;
                             
             padding: 10px;
         }
 
         #tabFooter {
 
-            -webkit-flex: 0 1 auto;
             flex: 0 1 auto;
-            -ms-flex: 0 1 auto;
 
             background-color: #f7f7f7;
             border-color: #dddddd;
-/*
-            border-style:solid;
-            border-top-width: 0px;
-            border-left-width: 1px;
-            border-right-width: 1px;
-            border-bottom-width: 1px;
-*/
             border-style:solid;
             border-top-width: 1px;
             border-left-width: 0px;
@@ -111,33 +79,16 @@ version: 0.0.2
         #tabPageContent > div,
         #tabPageContent ::slotted(*) {
 
-           -webkit-flex: 1;
             flex: 1;
-            -ms-flex: 1;
 
-            display: -webkit-box;
-            display: -moz-box;
-            display: -ms-flexbox;
-            display: -webkit-flex;
             display: flex;
 
-
             flex-direction: row;
-            -webkit-flex-direction: row;
-            -ms-flex-direction: row;
-/*
-            border-color: red;
-            border-style:solid;
-            border-top-width: 0px;
-            border-left-width: 0px;
-            border-right-width: 0px;
-            border-bottom-width: 0px;
-*/
             height: 400px;
         }
 
-        #tabPageContent > div.hideme,
-        #tabPageContent ::slotted(.hideme) {
+        #tabPageContent > [hidden],
+        #tabPageContent ::slotted([hidden]) {
             display: none;
         }
 
@@ -244,7 +195,11 @@ version: 0.0.2
         },
         attached: function() {
             this.$.mdedit.$.previewPanel.style.display = "none";
-            this.showPage(this.$.markdownButton);
+            var defaultButton = this.querySelectorAll("[slot='tab-button']")[0];
+            if (!defaultButton) {
+                defaultButton = this.$.markdownButton;
+            }
+            this.showPage(defaultButton);
         },
         showPage: function(button) {
             var domButtons = Array.from(this.querySelectorAll("[slot='tab-button']"));
@@ -267,24 +222,20 @@ version: 0.0.2
             shadowDomButtons.forEach((elem) => elem.classList.remove('selected'));
             button.classList.add('selected');
 
-            domBodies.forEach((elem) => elem.classList.add('hideme'));
-            shadowDomBodies.forEach((elem) => elem.classList.add('hideme'));
-            tab.classList.remove('hideme');
+            domBodies.forEach((elem) => elem.setAttribute('hidden', ''));
+            shadowDomBodies.forEach((elem) => elem.setAttribute('hidden', ''));
+            tab.removeAttribute('hidden');
         },
-        htmlValueChanged: function(newValue, oldValue){
-            if (this.skipNext) {
-                this.skipNext = false;
-                return;
-            }
+        htmlValueChanged: function(newValue, oldValue) {
             if (newValue !== null) {
                 this.skipHtmlChange = true;
-                this.markdownValue = toMarkdown(newValue);
+                this.markdownValue = toMarkdown(newValue, { converters: [{ filter: ['em', 'i'], replacement: (c) => ('*'+c+'*') }] });
             }
         },
-        markdownValueChanged: function(newValue, oldValue){
-            this.skipNext = true;
-            if (!this.skipHtmlChange)
+        markdownValueChanged: function(newValue, oldValue) {
+            if (!this.skipHtmlChange) {
                 this.htmlValue = this.$.mdedit.$.previewPanel.$.preview.innerHTML;
+            }
             this.skipHtmlChange = false;
         },
         footerChanged: function( newValue, oldValue) {
